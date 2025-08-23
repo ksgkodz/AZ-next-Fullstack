@@ -12,6 +12,8 @@ import ProductGallery from '@/components/shared/product/product-gallery'
 import { Separator } from '@/components/ui/separator'
 import ProductSlider from '@/components/shared/product/product-slider'
 import Rating from '@/components/shared/product/rating'
+import AddToCart from '@/components/shared/product/add-to-cart'
+import { generateId, round2 } from '@/lib/utils'
 
 
 export async function generateMetadata(props: {
@@ -114,6 +116,28 @@ export default async function ProductDetails(props: {
                     Out of Stock
                   </div>
                 )}
+
+                 {product.countInStock !== 0 && (
+                    <div className='flex justify-center items-center'>
+                      <AddToCart
+                        item={{
+                          clientId: generateId(),
+                          product: product._id,
+                          countInStock: product.countInStock,
+                          name: product.name,
+                          slug: product.slug,
+                          category: product.category,
+                          price: round2(product.price),
+                          quantity: 1,
+                          image: product.images[0],
+                          size: size || product.sizes[0],
+                          color: color || product.colors[0],
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  
               </CardContent>
             </Card>
           </div>
