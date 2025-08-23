@@ -79,7 +79,7 @@ export default function CartAddItem({ itemId }: { itemId: string }) {
               </div>
               <div className='lg:border-l lg:border-muted lg:pl-3 flex flex-col items-center gap-3  '>
                 <div className='flex gap-3'>
-                  <span className='text-lg font-bold'>Cart Subtotal:</span>
+                  <span className='text-lg font-bold'>Cart Subtotal: </span>
                   <ProductPrice className='text-2xl' price={itemsPrice} />
                 </div>
                 <Link
