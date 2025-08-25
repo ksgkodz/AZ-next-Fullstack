@@ -25,7 +25,7 @@ export default function Footer() {
           <Link href='/page/help'>Help</Link>
         </div>
         <div className='flex justify-center text-sm'>
-          <p> © 2025, ksgkodz, Inc. or its affiliates</p>
+          <p> © 2025, ksgkodz, Inc.</p>
         </div>
         <div className='mt-8 flex justify-center text-sm text-gray-400'>
           420, Main Street, Kunjah | +1 (123) 456-7890
