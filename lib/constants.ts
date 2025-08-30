@@ -1,6 +1,9 @@
 export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || 'NxtAmzn'
 export const SERVER_URL =
-  process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+  process.env.NEXT_PUBLIC_SERVER_URL || 
+  (process.env.NODE_ENV === 'production' 
+    ? `https://${process.env.VERCEL_URL || 'az-next-fullstack.vercel.app'}` 
+    : 'http://localhost:3000')
 export const SENDER_EMAIL = process.env.SENDER_EMAIL || 'onboarding@resend.dev'
 export const SENDER_NAME = process.env.SENDER_NAME || APP_NAME
 export const APP_SLOGAN = process.env.NEXT_PUBLIC_APP_SLOGAN || 'Spend less, enjoy more.'
