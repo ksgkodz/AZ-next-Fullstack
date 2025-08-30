@@ -44,7 +44,7 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.65rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -123,13 +123,15 @@
 
 @layer utilities {
   .highlight-link a,
+
   a.highlight-link {
     @apply text-sky-700 hover:text-orange-700 hover:underline;
   }
+
   .header-button {
     @apply cursor-pointer p-1 border border-transparent hover:border-white rounded-[2px];
   }
-  
+
   .item-button {
     @apply p-3 hover:bg-muted hover:no-underline;
   }
@@ -143,5 +145,4 @@
     .flex-between {
     @apply flex justify-between items-center;
   }
-
 }
