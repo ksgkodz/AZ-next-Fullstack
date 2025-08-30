@@ -7,11 +7,15 @@ import Order from '@/lib/db/models/order.model'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
 export async function POST(req: NextRequest) {
+  console.log('🔔 Stripe webhook received')
+  
   const event = await stripe.webhooks.constructEvent(
     await req.text(),
     req.headers.get('stripe-signature') as string,
     process.env.STRIPE_WEBHOOK_SECRET as string
   )
+
+  console.log('🎯 Event type:', event.type)
 
   if (event.type === 'charge.succeeded') {
     const charge = event.data.object
@@ -32,10 +36,13 @@ export async function POST(req: NextRequest) {
       pricePaid: (pricePaidInCents / 100).toFixed(2),
     }
     await order.save()
+    console.log('📧 Attempting to send email to:', (order.user as { email: string }).email)
+    
     try {
       await sendPurchaseReceipt({ order })
+      console.log('✅ Email sent successfully')
     } catch (err) {
-      console.log('email error', err)
+      console.log('❌ Email error:', err)
     }
     return NextResponse.json({
       message: 'updateOrderToPaid was successful',
