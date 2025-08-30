@@ -3,11 +3,15 @@ import Stripe from 'stripe'
 
 import { sendPurchaseReceipt } from '@/emails'
 import Order from '@/lib/db/models/order.model'
+import '@/lib/db/models/user.model' // Import to register User schema
+import { connectToDatabase } from '@/lib/db'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
 export async function POST(req: NextRequest) {
   console.log('🔔 Stripe webhook received')
+  
+  await connectToDatabase()
   
   const event = await stripe.webhooks.constructEvent(
     await req.text(),
