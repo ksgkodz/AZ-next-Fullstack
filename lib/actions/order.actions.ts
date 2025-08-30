@@ -4,7 +4,7 @@ import { formatError, round2 } from '../utils'
 import { connectToDatabase } from '../db'
 import { auth } from '@/auth'
 import { OrderInputSchema } from '../validator'
-import { AVAILABLE_DELIVERY_DATES} from "../constants";
+import { AVAILABLE_DELIVERY_DATES, PAGE_SIZE} from "../constants";
 import { sendPurchaseReceipt } from '@/emails'
 import { paypal } from '../paypal'
 import { revalidatePath } from 'next/cache'
@@ -174,4 +174,33 @@ export async function getOrderById(orderId: string): Promise<IOrder> {
   await connectToDatabase()
   const order = await Order.findById(orderId)
   return JSON.parse(JSON.stringify(order))
+}
+
+//GET 
+export async function getMyOrders({
+  limit,
+  page,
+}: {
+  limit?: number
+  page: number
+}) {
+  limit = limit || PAGE_SIZE
+  await connectToDatabase()
+  const session = await auth()
+  if (!session) {
+    throw new Error('User is not authenticated')
+  }
+  const skipAmount = (Number(page) - 1) * limit
+  const orders = await Order.find({
+    user: session?.user?.id,
+  })
+    .sort({ createdAt: 'desc' })
+    .skip(skipAmount)
+    .limit(limit)
+  const ordersCount = await Order.countDocuments({ user: session?.user?.id })
+
+  return {
+    data: JSON.parse(JSON.stringify(orders)),
+    totalPages: Math.ceil(ordersCount / limit),
+  }
 }
