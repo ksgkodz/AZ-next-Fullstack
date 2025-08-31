@@ -26,7 +26,7 @@ const availableColors = [
       '--popover': '0 0% 100%',
       '--popover-foreground': '20 14.3% 4.1%',
       '--primary': '47.9 95.8% 53.1%',
-      '--primary-foreground': '26 83.3% 14.1%',
+      '--primary-foreground': '0 0% 0%',
       '--secondary': '60 4.8% 95.9%',
       '--secondary-foreground': '24 9.8% 10%',
       '--muted': '60 4.8% 95.9%',
@@ -70,6 +70,7 @@ const availableColors = [
       '--chart-3': '30 80% 55%',
       '--chart-4': '280 65% 60%',
       '--chart-5': '340 75% 55%',
+      '--radius': '1rem',
     },
   },
   {
@@ -126,6 +127,7 @@ const availableColors = [
       '--chart-3': '30 80% 55%',
       '--chart-4': '280 65% 60%',
       '--chart-5': '340 75% 55%',
+      '--radius': '1rem',
     },
   },
   {
@@ -182,6 +184,7 @@ const availableColors = [
       '--chart-3': '30 80% 55%',
       '--chart-4': '280 65% 60%',
       '--chart-5': '340 75% 55%',
+      '--radius': '1rem',
     },
   },
 ]
@@ -229,7 +232,8 @@ export default function useColorStore(theme: string = 'light') {
       const colors: { [key: string]: string } =
         theme === 'light' ? color.root : color.dark
       for (const key in colors) {
-        document.documentElement.style.setProperty(key, `hsl(${colors[key]})`)
+        const value = key === '--radius' ? colors[key] : `hsl(${colors[key]})`
+        document.documentElement.style.setProperty(key, value)
       }
     },
   }
