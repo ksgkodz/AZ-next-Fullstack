@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
     // ✅ Allow production builds even if ESLint errors are present
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
