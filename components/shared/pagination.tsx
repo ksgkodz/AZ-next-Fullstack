@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { formUrlQuery } from '@/lib/utils'
 
@@ -29,24 +30,27 @@ const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
     router.push(newUrl, { scroll: true })
   }
   return (
-    <div className='flex gap-2'>
+    <div className='flex items-center justify-center gap-4 mt-4'>
       <Button
         size='lg'
         variant='outline'
-        className='w-28'
+        className='flex items-center gap-1'
         onClick={() => onClick('prev')}
         disabled={Number(page) <= 1}
       >
-        Previous
+        <ChevronLeft className='h-4 w-4' /> Previous
       </Button>
+      <span className='text-sm font-medium whitespace-nowrap'>
+        Page {page} of {totalPages}
+      </span>
       <Button
         size='lg'
         variant='outline'
-        className='w-28'
+        className='flex items-center gap-1'
         onClick={() => onClick('next')}
         disabled={Number(page) >= totalPages}
       >
-        Next
+        Next <ChevronRight className='h-4 w-4' />
       </Button>
     </div>
   )

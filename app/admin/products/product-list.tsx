@@ -167,24 +167,26 @@ const ProductList = () => {
               ))}
             </TableBody>
           </Table>
-          {(data?.totalPages ?? 0) > 1 && (
-            <div className='flex items-center gap-2'>
+            {(data?.totalPages ?? 0) > 1 && (
+            <div className='flex items-center justify-center gap-4 mt-4'>
               <Button
                 variant='outline'
                 onClick={() => handlePageChange('prev')}
                 disabled={Number(page) <= 1}
-                className='w-24'
+                className='flex items-center gap-1'
               >
-                <ChevronLeft /> Previous
+                <ChevronLeft className='h-4 w-4' /> Previous
               </Button>
-              Page {page} of {data?.totalPages}
+              <span className='text-sm font-medium whitespace-nowrap'>
+                Page {page} of {data?.totalPages}
+              </span>
               <Button
                 variant='outline'
                 onClick={() => handlePageChange('next')}
                 disabled={Number(page) >= (data?.totalPages ?? 0)}
-                className='w-24'
+                className='flex items-center gap-1'
               >
-                Next <ChevronRight />
+                Next <ChevronRight className='h-4 w-4' />
               </Button>
             </div>
           )}
