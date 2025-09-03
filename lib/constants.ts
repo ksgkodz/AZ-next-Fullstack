@@ -16,6 +16,8 @@ export const APP_COPYRIGHT =
 process.env.NEXT_PUBLIC_APP_COPYRIGHT ||
 `Copyright © 2025 ${APP_NAME}. All rights reserved.`
 
+export const USER_ROLES = ['Admin', 'User']
+
 
 export const AVAILABLE_PAYMENT_METHODS = [
   {
