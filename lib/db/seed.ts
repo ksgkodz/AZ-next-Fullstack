@@ -6,6 +6,7 @@ import { loadEnvConfig } from "@next/env";
 import Review from "./models/review.model";
 import User from "./models/user.model";
 import Order from "./models/order.model";
+import WebPage from "./models/web-page.model";
 import { generateId } from "../utils";
 import { IOrderInput } from "@/types";
 import { calculatePastDate } from "../utils";
@@ -18,11 +19,14 @@ loadEnvConfig(cwd());
 
 const main = async () => {
   try {
-    const { products, users, reviews } = data;
+    const { products, users, reviews, webPages } = data;
     await connectToDatabase(process.env.MONGODB_URI);
 
     await User.deleteMany();
     const createdUser = await User.insertMany(users);
+
+    await WebPage.deleteMany();
+    await WebPage.insertMany(webPages);
 
     await Product.deleteMany();
     const createdProducts = await Product.insertMany(products);
