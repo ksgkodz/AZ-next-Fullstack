@@ -59,3 +59,13 @@ export const AVAILABLE_DELIVERY_DATES = [
     freeShippingMinPrice: 35,
   },
 ]
+
+export const COLORS = [
+  'slate', 'gray', 'zinc', 'neutral', 'stone',
+  'red', 'orange', 'amber', 'yellow', 'lime',
+  'green', 'emerald', 'teal', 'cyan', 'sky',
+  'blue', 'indigo', 'violet', 'purple', 'fuchsia',
+  'pink', 'rose', 'gold'
+]
+
+export const THEMES = ['light', 'dark']

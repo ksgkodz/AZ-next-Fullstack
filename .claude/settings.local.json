@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\app\\[locale]\\checkout\\[id]/**)",
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\app\\[locale]\\admin\\settings/**)",
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\lib/**)",
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\types/**)",
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\types/**)",
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\types/**)",
+      "Bash(npm run build:*)",
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\app/**)",
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main/**)",
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\app\\[locale]\\(root)/**)",
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\app\\[locale]\\(home)/**)",
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\lib\\actions/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

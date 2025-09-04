@@ -4,7 +4,7 @@ import { formatError, round2 } from '../utils'
 import { connectToDatabase } from '../db'
 import { auth } from '@/auth'
 import { OrderInputSchema } from '../validator'
-import { AVAILABLE_DELIVERY_DATES, PAGE_SIZE} from "../constants";
+import { getSetting } from './setting.actions'
 import { sendAskReviewOrderItems, sendPurchaseReceipt } from '@/emails'
 import mongoose from 'mongoose'
 import { paypal } from '../paypal'
@@ -89,10 +89,14 @@ export async function getOrderSummary(date: DateRange) {
   const topSalesCategories = await getTopSalesCategories(date)
   const topSalesProducts = await getTopSalesProducts(date)
 
+  const {
+    common: { pageSize },
+  } = await getSetting()
+  const limit = pageSize
   const latestOrders = await Order.find()
     .populate('user', 'name')
     .sort({ createdAt: 'desc' })
-    .limit(PAGE_SIZE)
+    .limit(limit)
   return {
     ordersCount,
     productsCount,
@@ -345,14 +349,15 @@ export const calcDeliveryDateAndPrice = async ({
   items: OrderItem[]
   shippingAddress?: ShippingAddress
 }) => {
+  const { availableDeliveryDates } = await getSetting()
   const itemsPrice = round2(
     items.reduce((acc, item) => acc + item.price * item.quantity, 0)
   )
 
   const deliveryDate = 
-  AVAILABLE_DELIVERY_DATES[
+  availableDeliveryDates[
     deliveryDateIndex === undefined
-    ?AVAILABLE_DELIVERY_DATES.length - 1
+    ? availableDeliveryDates.length - 1
     : deliveryDateIndex
   ]
 
@@ -373,10 +378,10 @@ export const calcDeliveryDateAndPrice = async ({
   )
 
   return {
-    AVAILABLE_DELIVERY_DATES,
+    availableDeliveryDates,
     deliveryDateIndex:
       deliveryDateIndex === undefined
-      ?AVAILABLE_DELIVERY_DATES.length -1
+      ? availableDeliveryDates.length - 1
       : deliveryDateIndex,
     itemsPrice,
     shippingPrice,
@@ -399,7 +404,10 @@ export async function getMyOrders({
   limit?: number
   page: number
 }) {
-  limit = limit || PAGE_SIZE
+  const {
+    common: { pageSize },
+  } = await getSetting()
+  limit = limit || pageSize
   await connectToDatabase()
   const session = await auth()
   if (!session) {
@@ -445,7 +453,10 @@ export async function getAllOrders({
   limit?: number
   page: number
 }) {
-  limit = limit || PAGE_SIZE
+  const {
+    common: { pageSize },
+  } = await getSetting()
+  limit = limit || pageSize
   await connectToDatabase()
   const skipAmount = (Number(page) - 1) * limit
   const orders = await Order.find()

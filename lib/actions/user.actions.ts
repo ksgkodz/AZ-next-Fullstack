@@ -9,7 +9,7 @@ import User, { IUser } from '../db/models/user.model'
 import { formatError } from '../utils'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
-import { PAGE_SIZE } from '../constants'
+import { getSetting } from './setting.actions'
 
 
 export async function signInWithCredentials(user: IUserSignIn) {
@@ -109,7 +109,10 @@ export async function getAllUsers({
   limit?: number
   page: number
 }) {
-  limit = limit || PAGE_SIZE
+  const {
+    common: { pageSize },
+  } = await getSetting()
+  limit = limit || pageSize
   await connectToDatabase()
 
   const skipAmount = (Number(page) - 1) * limit

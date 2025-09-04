@@ -230,20 +230,20 @@ export const CarouselSchema = z.object({
 export const SiteCurrencySchema = z.object({
   name: z.string().min(1, 'Name is required'),
   code: z.string().min(1, 'Code is required'),
-  convertRate: z.coerce.number().min(0, 'Convert rate must be at least 0'),
+  convertRate: z.number().min(0, 'Convert rate must be at least 0'),
   symbol: z.string().min(1, 'Symbol is required'),
 })
 
 export const PaymentMethodSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  commission: z.coerce.number().min(0, 'Commission must be at least 0'),
+  commission: z.number().min(0, 'Commission must be at least 0'),
 })
 
 export const DeliveryDateSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   daysToDeliver: z.number().min(0, 'Days to deliver must be at least 0'),
-  shippingPrice: z.coerce.number().min(0, 'Shipping price must be at least 0'),
-  freeShippingMinPrice: z.coerce
+  shippingPrice: z.number().min(0, 'Shipping price must be at least 0'),
+  freeShippingMinPrice: z
     .number()
     .min(0, 'Free shipping min amount must be at least 0'),
 })
@@ -252,23 +252,19 @@ export const SettingInputSchema = z.object({
   // PROMPT: create fields
   // codeium, based on the mongoose schema for settings
   common: z.object({
-    pageSize: z.coerce
+    pageSize: z
       .number()
-      .min(1, 'Page size must be at least 1')
-      .default(9),
-    isMaintenanceMode: z.boolean().default(false),
-    freeShippingMinPrice: z.coerce
+      .min(1, 'Page size must be at least 1'),
+    isMaintenanceMode: z.boolean(),
+    freeShippingMinPrice: z
       .number()
-      .min(0, 'Free shipping min price must be at least 0')
-      .default(0),
+      .min(0, 'Free shipping min price must be at least 0'),
     defaultTheme: z
       .string()
-      .min(1, 'Default theme is required')
-      .default('light'),
+      .min(1, 'Default theme is required'),
     defaultColor: z
       .string()
-      .min(1, 'Default color is required')
-      .default('gold'),
+      .min(1, 'Default color is required'),
   }),
   site: z.object({
     name: z.string().min(1, 'Name is required'),

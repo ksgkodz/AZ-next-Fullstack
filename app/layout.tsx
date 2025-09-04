@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { APP_DESCRIPTION, APP_NAME, APP_SLOGAN } from '@/lib/constants'
 import ClientProviders from '@/components/shared/client-providers'
+import { getSetting } from '@/lib/actions/setting.actions'
+import { cookies } from 'next/headers'
 
 
 const geistSans = Geist({
@@ -24,17 +26,21 @@ export const metadata: Metadata = {
   description: APP_DESCRIPTION,
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const setting = await getSetting()
+  const currencyCookie = (await cookies()).get('currency')
+  const currency = currencyCookie ? currencyCookie.value : 'USD'
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ClientProviders>{children}</ClientProviders>
+        <ClientProviders setting={{ ...setting, currency }}>{children}</ClientProviders>
 
       </body>
     </html>

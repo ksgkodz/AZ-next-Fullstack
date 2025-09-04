@@ -1,6 +1,7 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
+import withNextIntl from 'next-intl/plugin'
 
-const nextConfig: NextConfig = {
+const nextConfig: NextConfig = withNextIntl()({
   eslint: {
     // ✅ Allow production builds even if ESLint errors are present
     ignoreDuringBuilds: true,
@@ -10,9 +11,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'utfs.io',
+        port: '',
       },
     ],
   },
-};
+})
 
-export default nextConfig;
+export default nextConfig
