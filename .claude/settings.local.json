@@ -12,7 +12,9 @@
       "Read(/F:\\Projects\\AZ-next-Fullstack-main/**)",
       "Read(/F:\\Projects\\AZ-next-Fullstack-main\\app\\[locale]\\(root)/**)",
       "Read(/F:\\Projects\\AZ-next-Fullstack-main\\app\\[locale]\\(home)/**)",
-      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\lib\\actions/**)"
+      "Read(/F:\\Projects\\AZ-next-Fullstack-main\\lib\\actions/**)",
+      "Bash(npm run dev:*)",
+      "Bash(taskkill:*)"
     ],
     "deny": [],
     "ask": []

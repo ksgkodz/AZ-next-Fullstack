@@ -20,11 +20,31 @@ const ProductPrice = ({
 }) => {
   const { getCurrency } = useSettingStore()
   const currency = getCurrency()
-  const t = useTranslations()
+
+  // Safely handle translations and formatter context
+  let t: any, format: any
+  try {
+    t = useTranslations()
+    format = useFormatter()
+  } catch {
+    // Fallback when NextIntl context is not available
+    t = (key: string) => {
+      const keyMap: { [key: string]: string } = {
+        'Product.Off': 'Off',
+        'Product.Limited time deal': 'Limited time deal',
+        'Product.Was': 'Was'
+      }
+      return keyMap[key] || key.split('.').pop() || key
+    }
+    format = {
+      number: (value: number, options: any) => {
+        return new Intl.NumberFormat('en-US', options).format(value)
+      }
+    }
+  }
+
   const convertedPrice = round2(currency.convertRate * price)
   const convertedListPrice = round2(currency.convertRate * listPrice)
-
-  const format = useFormatter()
   const discountPercent = Math.round(
     100 - (convertedPrice / convertedListPrice) * 100
   )

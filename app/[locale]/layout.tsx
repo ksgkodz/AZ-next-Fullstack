@@ -53,20 +53,10 @@ export default async function AppLayout({
   const messages = await getMessages({ locale })
 
   return (
-    <html
-      lang={locale}
-      dir={getDirection(locale) === 'rtl' ? 'rtl' : 'ltr'}
-      suppressHydrationWarning
-    >
-      <body
-        className={`min-h-screen ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ClientProviders setting={{ ...setting, currency }}>
-            {children}
-          </ClientProviders>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <ClientProviders setting={{ ...setting, currency }}>
+        {children}
+      </ClientProviders>
+    </NextIntlClientProvider>
   )
 }

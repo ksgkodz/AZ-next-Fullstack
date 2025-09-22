@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { APP_DESCRIPTION, APP_NAME, APP_SLOGAN } from '@/lib/constants'
-import ClientProviders from '@/components/shared/client-providers'
+import { ThemeProvider } from '@/components/shared/theme-provider'
+import AppInitializer from '@/components/shared/app-initializer'
+import { Toaster } from '@/components/ui/sonner'
 import { getSetting } from '@/lib/actions/setting.actions'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
+import { getDirection } from '@/i18n-config'
+import { ClientSetting } from '@/types'
 
 
 const geistSans = Geist({
@@ -34,14 +38,28 @@ export default async function RootLayout({
   const setting = await getSetting()
   const currencyCookie = (await cookies()).get('currency')
   const currency = currencyCookie ? currencyCookie.value : 'USD'
+  const clientSetting: ClientSetting = { ...setting, currency }
+
+  // Extract locale from pathname for direction handling
+  const headersList = await headers()
+  const pathname = headersList.get('x-pathname') || '/'
+  const locale = pathname.split('/')[1] || 'en-US'
+  const direction = getDirection(locale)
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} dir={direction} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`min-h-screen ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ClientProviders setting={{ ...setting, currency }}>{children}</ClientProviders>
-
+        <AppInitializer setting={clientSetting}>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme={setting.common.defaultTheme.toLocaleLowerCase()}
+          >
+            {children}
+            <Toaster />
+          </ThemeProvider>
+        </AppInitializer>
       </body>
     </html>
   );

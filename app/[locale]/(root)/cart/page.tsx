@@ -126,7 +126,7 @@ export default function CartPage() {
                           </Select>
                           <Button
                             variant={'outline'}
-                            onClick={() => removeItem(item)}
+                            onClick={async () => await removeItem(item)}
                           >
                             {t('Cart.Delete')}
                           </Button>

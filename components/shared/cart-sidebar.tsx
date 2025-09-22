@@ -32,24 +32,32 @@ export default function CartSidebar() {
     },
   } = useSettingStore()
 
-  const t = useTranslations()
-  const locale = useLocale()
+  // Safely handle translations context
+  let t: any, locale: string
+  try {
+    t = useTranslations()
+    locale = useLocale()
+  } catch {
+    // Fallback when NextIntl context is not available
+    t = (key: string) => key.split('.').pop() || key
+    locale = 'en-US'
+  }
 
   return (
-    <div className='w-32 overflow-y-auto'>
+    <div className='w-40 overflow-hidden'>
       <div
-        className={`w-32 fixed  h-full ${
+        className={`w-40 fixed h-full bg-background ${
           getDirection(locale) === 'rtl' ? 'border-r' : 'border-l'
         }`}
       >
-        <div className='p-2 h-full flex flex-col gap-2 justify-center items-center'>
-          <div className='text-center space-y-2'>
-            <div> {t('Cart.Subtotal')}</div>
-            <div className='font-bold '>
+        <div className='p-3 h-full flex flex-col gap-2'>
+          <div className='text-center space-y-2 flex-shrink-0'>
+            <div className='text-sm font-medium'>{t('Cart.Subtotal')}</div>
+            <div className='font-bold text-lg'>
               <ProductPrice price={itemsPrice} plain />
             </div>
             {itemsPrice > freeShippingMinPrice && (
-              <div className=' text-center text-xs'>
+              <div className='text-center text-xs text-green-600'>
                 {t('Cart.Your order qualifies for FREE Shipping')}
               </div>
             )}
@@ -57,7 +65,7 @@ export default function CartSidebar() {
             <Link
               className={cn(
                 buttonVariants({ variant: 'outline' }),
-                'rounded-full hover:no-underline w-full'
+                'rounded-full hover:no-underline w-full text-xs'
               )}
               href='/cart'
             >
@@ -66,32 +74,32 @@ export default function CartSidebar() {
             <Separator className='mt-3' />
           </div>
 
-          <ScrollArea className='flex-1  w-full'>
-            {items.map((item) => (
-              <div key={item.clientId}>
-                <div className='my-3'>
+          <ScrollArea className='flex-1 w-full max-h-[calc(100vh-300px)]'>
+            <div className='space-y-3 pr-2'>
+              {items.map((item) => (
+                <div key={item.clientId} className='space-y-2'>
                   <Link href={`/product/${item.slug}`}>
-                    <div className='relative h-24'>
+                    <div className='relative h-20 w-full'>
                       <Image
                         src={item.image}
                         alt={item.name}
                         fill
-                        sizes='20vw'
-                        className='object-contain'
+                        sizes='160px'
+                        className='object-contain rounded'
                       />
                     </div>
                   </Link>
-                  <div className='text-sm text-center font-bold'>
+                  <div className='text-xs text-center font-bold'>
                     <ProductPrice price={item.price} plain />
                   </div>
-                  <div className='flex gap-2 mt-2'>
+                  <div className='flex items-center justify-between gap-1'>
                     <Select
                       value={item.quantity.toString()}
                       onValueChange={(value) => {
                         updateItem(item, Number(value))
                       }}
                     >
-                      <SelectTrigger className='text-xs w-12 ml-1 h-auto py-0'>
+                      <SelectTrigger className='text-xs w-14 h-7 px-1'>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -107,17 +115,18 @@ export default function CartSidebar() {
                     <Button
                       variant={'outline'}
                       size={'sm'}
-                      onClick={() => {
-                        removeItem(item)
+                      className='h-7 w-7 p-0 flex-shrink-0'
+                      onClick={async () => {
+                        await removeItem(item)
                       }}
                     >
-                      <TrashIcon className='w-4 h-4' />
+                      <TrashIcon className='w-3 h-3' />
                     </Button>
                   </div>
+                  <Separator />
                 </div>
-                <Separator />
-              </div>
-            ))}
+              ))}
+            </div>
           </ScrollArea>
         </div>
       </div>

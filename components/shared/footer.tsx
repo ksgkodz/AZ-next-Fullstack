@@ -122,8 +122,7 @@ export default function Footer() {
                     <SelectItem key={index} value={lang.code}>
                       <Link
                         className='w-full flex items-center gap-1'
-                        href={pathname}
-                        locale={lang.code}
+                        href={`/${lang.code}${pathname === '/' ? '' : pathname}`}
                       >
                         <span className='text-lg'>{lang.icon}</span> {lang.name}
                       </Link>

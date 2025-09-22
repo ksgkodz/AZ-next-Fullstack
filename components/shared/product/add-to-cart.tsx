@@ -32,9 +32,9 @@ export default function AddToCart({
   return minimal ? (
     <Button
       className='rounded-full w-auto'
-      onClick={() => {
+      onClick={async () => {
         try {
-          addItem(item, 1)
+          await addItem(item, 1)
           toast.success(t('Product.Added to Cart'), {
             action: {
               label: t('Product.Go to Cart'),
@@ -85,9 +85,9 @@ export default function AddToCart({
       </Button>
       <Button
         variant='secondary'
-        onClick={() => {
+        onClick={async () => {
           try {
-            addItem(item, quantity)
+            await addItem(item, quantity)
             toast.success('Item added! Redirecting to checkout...')
             router.push(`/checkout`)
           } catch (error: any) {

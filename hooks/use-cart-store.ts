@@ -21,7 +21,7 @@ interface CartState {
   addItem: (item: OrderItem, quantity: number) => Promise<string>;
 
   updateItem: (item: OrderItem, quantity: number) => Promise<void>;
-  removeItem: (item: OrderItem) => void;
+  removeItem: (item: OrderItem) => Promise<void>;
 
   clearCart: () => void
 

@@ -578,9 +578,9 @@ const CheckoutForm = () => {
 
                               <Select
                                 value={item.quantity.toString()}
-                                onValueChange={(value) => {
-                                  if (value === '0') removeItem(item)
-                                  else updateItem(item, Number(value))
+                                onValueChange={async (value) => {
+                                  if (value === '0') await removeItem(item)
+                                  else await updateItem(item, Number(value))
                                 }}
                               >
                                 <SelectTrigger className='w-24'>
