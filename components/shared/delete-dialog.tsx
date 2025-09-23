@@ -12,6 +12,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 import { toast } from 'sonner'
 
 export default function DeleteDialog({
@@ -59,7 +60,14 @@ export default function DeleteDialog({
               })
             }
           >
-            {isPending ? 'Deleting...' : 'Delete'}
+            {isPending ? (
+              <div className="flex items-center gap-2">
+                <Spinner size="sm" />
+                <span>Deleting...</span>
+              </div>
+            ) : (
+              'Delete'
+            )}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

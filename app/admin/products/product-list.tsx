@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import DeleteDialog from '@/components/shared/delete-dialog'
 import { Button } from '@/components/ui/button'
+import { Loading } from '@/components/ui/spinner'
 import {
   Table,
   TableBody,
@@ -93,7 +94,11 @@ const ProductList = () => {
               />
 
               {isPending ? (
-                <p>Loading...</p>
+                <Loading
+                  text="Loading..."
+                  spinner={{ variant: 'default', size: 'sm' }}
+                  centered={false}
+                />
               ) : (
                 <p>
                   {data?.totalProducts === 0

@@ -2,6 +2,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 import {
   Select,
   SelectContent,
@@ -27,12 +28,16 @@ export default function AddToCart({
   const { addItem } = useCartStore()
   //PROMPT: add quantity state
   const [quantity, setQuantity] = useState(1)
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const [isBuyingNow, setIsBuyingNow] = useState(false)
   const t = useTranslations()
 
   return minimal ? (
     <Button
       className='rounded-full w-auto'
+      disabled={isAddingToCart}
       onClick={async () => {
+        setIsAddingToCart(true)
         try {
           await addItem(item, 1)
           toast.success(t('Product.Added to Cart'), {
@@ -43,10 +48,19 @@ export default function AddToCart({
           })
         } catch (error: any) {
           toast.error(error.message)
+        } finally {
+          setIsAddingToCart(false)
         }
       }}
     >
-      {t('Product.Add to Cart')}
+      {isAddingToCart ? (
+        <div className="flex items-center gap-2">
+          <Spinner size="sm" />
+          <span>Adding...</span>
+        </div>
+      ) : (
+        t('Product.Add to Cart')
+      )}
     </Button>
   ) : (
     <div className='w-full space-y-2'>
@@ -71,32 +85,54 @@ export default function AddToCart({
       <Button
         className='rounded-full w-full'
         type='button'
+        disabled={isAddingToCart || isBuyingNow}
         onClick={async () => {
+          setIsAddingToCart(true)
           try {
             const itemId = await addItem(item, quantity)
             toast.success(`Added ${quantity} item${quantity > 1 ? 's' : ''} to cart`)
             router.push(`/cart/${itemId}`)
           } catch (error: any) {
             toast.error(error.message)
+          } finally {
+            setIsAddingToCart(false)
           }
         }}
       >
-        {t('Product.Add to Cart')}
+        {isAddingToCart ? (
+          <div className="flex items-center gap-2">
+            <Spinner size="sm" />
+            <span>Adding to Cart...</span>
+          </div>
+        ) : (
+          t('Product.Add to Cart')
+        )}
       </Button>
       <Button
         variant='secondary'
+        disabled={isAddingToCart || isBuyingNow}
         onClick={async () => {
+          setIsBuyingNow(true)
           try {
             await addItem(item, quantity)
             toast.success('Item added! Redirecting to checkout...')
             router.push(`/checkout`)
           } catch (error: any) {
             toast.error(error.message)
+          } finally {
+            setIsBuyingNow(false)
           }
         }}
         className='w-full rounded-full '
       >
-        {t('Product.Buy Now')}
+        {isBuyingNow ? (
+          <div className="flex items-center gap-2">
+            <Spinner size="sm" />
+            <span>Processing...</span>
+          </div>
+        ) : (
+          t('Product.Buy Now')
+        )}
       </Button>
     </div>
   )

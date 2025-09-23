@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl'
 
 import Rating from '@/components/shared/product/rating'
 import { Button } from '@/components/ui/button'
+import { Loading } from '@/components/ui/spinner'
 import {
   Card,
   CardContent,
@@ -326,7 +327,14 @@ export default function ReviewList({
               </Button>
             )}
 
-            {page < totalPages && loadingReviews && t('Loading')}
+            {page < totalPages && loadingReviews && (
+              <div className="flex justify-center py-4">
+                <Loading
+                  text={t('Loading')}
+                  spinner={{ variant: 'default', size: 'md' }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

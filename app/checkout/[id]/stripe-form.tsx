@@ -7,6 +7,7 @@ import {
 import { FormEvent, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 import ProductPrice from '@/components/shared/product/product-price'
 import { SERVER_URL } from '@/lib/constants'
 
@@ -60,7 +61,10 @@ export default function StripeForm({
         disabled={stripe == null || elements == null || isLoading}
       >
         {isLoading ? (
-          'Purchasing...'
+          <div className="flex items-center gap-2">
+            <Spinner size="sm" />
+            <span>Purchasing...</span>
+          </div>
         ) : (
           <div>
             Purchase - <ProductPrice price={priceInCents / 100} plain />

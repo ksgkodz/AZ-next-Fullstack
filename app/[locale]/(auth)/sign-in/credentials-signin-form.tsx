@@ -1,7 +1,9 @@
 'use client'
 import { redirect, useSearchParams } from 'next/navigation'
+import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import useSettingStore from '@/hooks/use-setting-store'
@@ -39,6 +41,7 @@ export default function CredentialsSignInForm() {
   } = useSettingStore()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/'
+  const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<IUserSignIn>({
     resolver: zodResolver(UserSignInSchema),
@@ -48,6 +51,7 @@ export default function CredentialsSignInForm() {
   const { control, handleSubmit } = form
 
   const onSubmit = async (data: IUserSignIn) => {
+    setIsLoading(true)
     try {
       await signInWithCredentials({
         email: data.email,
@@ -59,6 +63,8 @@ export default function CredentialsSignInForm() {
         throw error
       }
       toast.error('Invalid email or password')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -100,7 +106,16 @@ export default function CredentialsSignInForm() {
           />
 
           <div>
-            <Button type='submit'>Sign In</Button>
+            <Button type='submit' disabled={isLoading} className="w-full">
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <Spinner size="sm" />
+                  <span>Signing In...</span>
+                </div>
+              ) : (
+                'Sign In'
+              )}
+            </Button>
           </div>
           <div className='text-sm'>
             By signing in, you agree to {site.name}&apos;s{' '}

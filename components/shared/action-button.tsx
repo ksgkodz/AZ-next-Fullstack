@@ -2,6 +2,7 @@
 import { useTransition } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 
@@ -37,7 +38,14 @@ export default function ActionButton({
         })
       }
     >
-      {isPending ? 'processing...' : caption}
+      {isPending ? (
+        <div className="flex items-center gap-2">
+          <Spinner size="sm" />
+          <span>Processing...</span>
+        </div>
+      ) : (
+        caption
+      )}
     </Button>
   )
 }
