@@ -108,10 +108,7 @@ export default function CredentialsSignInForm() {
           <div>
             <Button type='submit' disabled={isLoading} className="w-full">
               {isLoading ? (
-                <div className="flex items-center gap-2">
-                  <Spinner size="sm" />
-                  <span>Signing In...</span>
-                </div>
+                <Spinner size="sm" />
               ) : (
                 'Sign In'
               )}

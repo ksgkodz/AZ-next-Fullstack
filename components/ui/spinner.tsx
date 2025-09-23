@@ -17,7 +17,7 @@ function DefaultSpinner({ size = 'md', className }: Pick<SpinnerProps, 'size' | 
   return (
     <div
       className={cn(
-        'animate-spin rounded-full border-2 border-gray-300 border-t-blue-600',
+        'animate-spin rounded-full border-4 border-gray-300 border-t-blue-600',
         sizeClasses[size],
         className
       )}

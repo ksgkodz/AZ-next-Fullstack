@@ -330,7 +330,6 @@ export default function ReviewList({
             {page < totalPages && loadingReviews && (
               <div className="flex justify-center py-4">
                 <Loading
-                  text={t('Loading')}
                   spinner={{ variant: 'default', size: 'md' }}
                 />
               </div>

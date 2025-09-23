@@ -39,10 +39,7 @@ export default function ActionButton({
       }
     >
       {isPending ? (
-        <div className="flex items-center gap-2">
-          <Spinner size="sm" />
-          <span>Processing...</span>
-        </div>
+        <Spinner size="sm" />
       ) : (
         caption
       )}

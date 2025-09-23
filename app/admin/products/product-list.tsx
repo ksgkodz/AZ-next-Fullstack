@@ -95,7 +95,6 @@ const ProductList = () => {
 
               {isPending ? (
                 <Loading
-                  text="Loading..."
                   spinner={{ variant: 'default', size: 'sm' }}
                   centered={false}
                 />

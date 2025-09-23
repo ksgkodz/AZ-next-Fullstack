@@ -1,7 +1,9 @@
 'use client'
 import { redirect, useSearchParams } from 'next/navigation'
+import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import useSettingStore from '@/hooks/use-setting-store'
@@ -43,6 +45,7 @@ export default function CredentialsSignInForm() {
   } = useSettingStore()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/'
+  const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<IUserSignUp>({
     resolver: zodResolver(UserSignUpSchema),
@@ -52,6 +55,7 @@ export default function CredentialsSignInForm() {
   const { control, handleSubmit } = form
 
   const onSubmit = async (data: IUserSignUp) => {
+    setIsLoading(true)
     try {
       const res = await registerUser(data)
       if (!res.success) {
@@ -68,6 +72,8 @@ export default function CredentialsSignInForm() {
         throw error
       }
       toast.error('Invalid email or password')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -139,7 +145,13 @@ export default function CredentialsSignInForm() {
             )}
           />
           <div>
-            <Button type='submit'>Sign Up</Button>
+            <Button type='submit' disabled={isLoading} className="w-full">
+              {isLoading ? (
+                <Spinner size="sm" />
+              ) : (
+                'Sign Up'
+              )}
+            </Button>
           </div>
           <div className='text-sm'>
             By creating an account, you agree to {site.name}&apos;s{' '}

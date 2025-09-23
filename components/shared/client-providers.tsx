@@ -5,6 +5,7 @@ import CartSidebar from './cart-sidebar'
 import { Toaster } from '../ui/sonner'
 import { ThemeProvider } from './theme-provider'
 import AppInitializer from './app-initializer'
+import NavigationLoading from './navigation-loading'
 import { ClientSetting } from '@/types'
 
 export default function ClientProviders({
@@ -22,6 +23,7 @@ export default function ClientProviders({
         attribute='class'
         defaultTheme={setting.common.defaultTheme.toLocaleLowerCase()}
       >
+        <NavigationLoading />
         {visible ? (
           <div className='flex min-h-screen'>
             <div className='flex-1 overflow-hidden'>{children}</div>

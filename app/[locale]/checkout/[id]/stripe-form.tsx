@@ -65,10 +65,7 @@ export default function StripeForm({
         disabled={stripe == null || elements == null || isLoading}
       >
         {isLoading ? (
-          <div className="flex items-center gap-2">
-            <Spinner size="sm" />
-            <span>Purchasing...</span>
-          </div>
+          <Spinner size="sm" />
         ) : (
           <div>
             Purchase - <ProductPrice price={priceInCents / 100} plain />

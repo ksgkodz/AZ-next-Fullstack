@@ -54,10 +54,7 @@ export default function AddToCart({
       }}
     >
       {isAddingToCart ? (
-        <div className="flex items-center gap-2">
-          <Spinner size="sm" />
-          <span>Adding...</span>
-        </div>
+        <Spinner size="sm" />
       ) : (
         t('Product.Add to Cart')
       )}
@@ -100,10 +97,7 @@ export default function AddToCart({
         }}
       >
         {isAddingToCart ? (
-          <div className="flex items-center gap-2">
-            <Spinner size="sm" />
-            <span>Adding to Cart...</span>
-          </div>
+          <Spinner size="sm" />
         ) : (
           t('Product.Add to Cart')
         )}
@@ -126,10 +120,7 @@ export default function AddToCart({
         className='w-full rounded-full '
       >
         {isBuyingNow ? (
-          <div className="flex items-center gap-2">
-            <Spinner size="sm" />
-            <span>Processing...</span>
-          </div>
+          <Spinner size="sm" />
         ) : (
           t('Product.Buy Now')
         )}

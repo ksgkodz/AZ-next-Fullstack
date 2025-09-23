@@ -61,10 +61,7 @@ export default function DeleteDialog({
             }
           >
             {isPending ? (
-              <div className="flex items-center gap-2">
-                <Spinner size="sm" />
-                <span>Deleting...</span>
-              </div>
+              <Spinner size="sm" />
             ) : (
               'Delete'
             )}
