@@ -17,7 +17,8 @@
       "Bash(taskkill:*)",
       "Bash(pkill:*)",
       "Bash(awk:*)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []
