@@ -81,14 +81,11 @@ export default function NavigationLoading() {
   if (!isLoading) return null
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm">
-      <div className="w-full h-1 bg-gray-200">
-        <div className="h-full bg-blue-600 animate-pulse" style={{ width: '100%' }} />
-      </div>
-      <div className="flex justify-center py-2">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background/80 backdrop-blur-md">
+      <div className="p-6 rounded-lg shadow-md w-full max-w-sm text-center">
         <Loading
-          spinner={{ variant: 'default', size: 'sm' }}
-          className="text-sm"
+          spinner={{ variant: 'default', size: 'xl' }}
+          className="justify-center"
         />
       </div>
     </div>
