@@ -1,36 +1,240 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛍️ Next.js E-Commerce Store
 
-## Getting Started
+A modern, full-stack e-commerce platform built with Next.js 15, featuring multi-language support, multiple payment gateways, and a powerful admin dashboard.
 
-First, run the development server:
+## ✨ Features
 
+### 🎨 User Experience
+- 🌍 **Multi-language Support** - English, French, and Arabic (RTL)
+- 🌓 **Dark Mode** - Seamless theme switching
+- 📱 **Fully Responsive** - Optimized for all devices
+- 🔍 **Advanced Search** - Find products quickly
+- 📜 **Browsing History** - Track viewed products
+- 🖼️ **Image Zoom** - Enhanced product viewing
+
+### 🛒 Shopping Features
+- 🛍️ **Shopping Cart** - Real-time cart management
+- 💳 **Multiple Payment Methods** - Stripe & PayPal integration
+- 📦 **Order Tracking** - Complete order history
+- 👤 **User Accounts** - Profile and address management
+- ✉️ **Email Notifications** - Order confirmations and updates
+
+### 🔐 Security & Auth
+- 🔒 **NextAuth** - Secure authentication system
+- 🗄️ **MongoDB** - Reliable database with Mongoose ODM
+- 🛡️ **Protected Routes** - Role-based access control
+- 🔑 **Password Encryption** - bcrypt hashing
+
+### ⚙️ Admin Dashboard
+- 📊 **Analytics Overview** - Sales and performance metrics
+- 📦 **Product Management** - CRUD operations with rich editor
+- 👥 **User Management** - Customer administration
+- 🧾 **Order Management** - Process and track orders
+- 🌐 **Web Pages** - Dynamic content management
+- ⚙️ **Settings** - Store configuration
+
+## 🚀 Tech Stack
+
+### Core
+- **Framework:** Next.js 15 (App Router, Turbopack)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4
+- **UI Components:** Radix UI
+- **State Management:** Zustand
+
+### Backend
+- **Database:** MongoDB with Mongoose
+- **Authentication:** NextAuth v5
+- **File Upload:** UploadThing
+- **Email:** React Email + Resend
+
+### Payments
+- **Stripe** - Credit card processing
+- **PayPal** - Alternative payment method
+
+### Internationalization
+- **next-intl** - i18n routing and translations
+- **Supported Locales:** en-US 🇺🇸, fr 🇫🇷, ar 🇸🇦
+
+## 📦 Installation
+
+### Prerequisites
+- Node.js 20+
+- MongoDB database
+- Stripe account
+- PayPal developer account
+- UploadThing account
+- Resend API key
+
+### Setup
+
+1. **Clone the repository**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd AZ-next-Fullstack
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install dependencies**
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Configure environment variables**
+Create a `.env.local` file with:
+```env
+# Database
+MONGODB_URI=your_mongodb_connection_string
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# NextAuth
+NEXTAUTH_SECRET=your_secret_key
+NEXTAUTH_URL=http://localhost:3000
 
-## Learn More
+# Stripe
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_public_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 
-To learn more about Next.js, take a look at the following resources:
+# PayPal
+NEXT_PUBLIC_PAYPAL_CLIENT_ID=your_paypal_client_id
+PAYPAL_APP_SECRET=your_paypal_secret
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# UploadThing
+UPLOADTHING_TOKEN=your_uploadthing_token
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Email
+RESEND_API_KEY=your_resend_api_key
+```
 
-## Deploy on Vercel
+4. **Seed the database (optional)**
+```bash
+npm run seed
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Run development server**
+```bash
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🛠️ Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server with Turbopack |
+| `npm run build` | Build for production |
+| `npm start` | Start production server |
+| `npm run lint` | Run ESLint |
+| `npm run seed` | Seed database with sample data |
+| `npm run email` | Preview email templates |
+
+## 📁 Project Structure
+
+```
+├── app/                    # Next.js app directory
+│   ├── [locale]/          # Internationalized routes
+│   │   ├── (root)/        # Public pages
+│   │   ├── (auth)/        # Authentication pages
+│   │   ├── admin/         # Admin dashboard
+│   │   └── checkout/      # Checkout process
+│   └── api/               # API routes
+├── components/            # React components
+│   ├── shared/           # Shared components
+│   └── ui/               # UI components (Radix)
+├── lib/                   # Utilities and helpers
+│   ├── actions/          # Server actions
+│   ├── db/               # Database models & config
+│   └── utils.ts          # Helper functions
+├── types/                 # TypeScript definitions
+├── i18n/                 # Internationalization config
+└── messages/             # Translation files
+```
+
+## 🌐 Internationalization
+
+The app supports three languages with automatic locale detection:
+- 🇺🇸 English (en-US) - Default
+- 🇫🇷 French (fr)
+- 🇸🇦 Arabic (ar) - with RTL support
+
+Routes are automatically prefixed with locale codes when needed.
+
+## 💳 Payment Integration
+
+### Stripe
+Handles credit card payments with webhook support for order processing.
+
+### PayPal
+Alternative payment method with full checkout integration.
+
+Both payment methods include:
+- ✅ Order confirmation
+- ✅ Email notifications
+- ✅ Webhook handling
+- ✅ Transaction tracking
+
+## 🎯 Key Features Deep Dive
+
+### Admin Dashboard
+Access at `/admin` (requires authentication):
+- Real-time sales analytics with charts (Recharts)
+- Product CRUD with markdown editor
+- Order status management
+- User role management
+- Dynamic web page creation
+
+### Shopping Experience
+- Infinite scroll product listings
+- Advanced filtering and sorting
+- Product quick view
+- Wishlist functionality
+- Responsive image optimization
+
+### Developer Experience
+- TypeScript for type safety
+- Zod schema validation
+- Server components by default
+- Optimistic UI updates
+- Form handling with React Hook Form
+
+## 📝 Environment Setup Checklist
+
+- [ ] MongoDB database created
+- [ ] Stripe account configured with test mode
+- [ ] PayPal sandbox credentials obtained
+- [ ] UploadThing project created
+- [ ] Resend API key generated
+- [ ] `.env.local` file configured
+- [ ] Database seeded (optional)
+
+## 🚢 Deployment
+
+### Recommended Platform: Vercel
+
+1. Push code to GitHub
+2. Import repository in Vercel
+3. Configure environment variables
+4. Deploy
+
+The app is optimized for Vercel with:
+- Automatic edge optimization
+- Image optimization
+- Serverless functions
+- Environment variable management
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a pull request
+
+## 📄 License
+
+This project is private and proprietary.
+
+---
+
+Built with ❤️ using Next.js
