@@ -13,36 +13,93 @@ const sizeClasses = {
   xl: 'w-12 h-12'
 }
 
-function DefaultSpinner({ size = 'md', className }: Pick<SpinnerProps, 'size' | 'className'>) {
-  return (
-    <div
-      className={cn(
-        'animate-spin rounded-full border-4 border-gray-300 border-t-blue-600',
-        sizeClasses[size],
-        className
-      )}
-    />
-  )
+const strokeWidthMap = {
+  sm: 2,
+  md: 3,
+  lg: 4,
+  xl: 5
 }
 
-function DotsSpinner({ size = 'md', className }: Pick<SpinnerProps, 'size' | 'className'>) {
-  const dotSize = size === 'sm' ? 'w-1 h-1' : size === 'md' ? 'w-1.5 h-1.5' : size === 'lg' ? 'w-2 h-2' : 'w-3 h-3'
+// Modern Material Design 3-inspired circular spinner
+function DefaultSpinner({ size = 'md', className }: Pick<SpinnerProps, 'size' | 'className'>) {
+  const sizeValue = size === 'sm' ? 16 : size === 'md' ? 24 : size === 'lg' ? 32 : 48
+  const strokeWidth = strokeWidthMap[size]
+  const radius = (sizeValue - strokeWidth) / 2
+  const circumference = radius * 2 * Math.PI
 
   return (
-    <div className={cn('flex space-x-1', className)}>
-      <div className={cn('bg-blue-600 rounded-full animate-bounce', dotSize)} style={{ animationDelay: '0ms' }} />
-      <div className={cn('bg-blue-600 rounded-full animate-bounce', dotSize)} style={{ animationDelay: '150ms' }} />
-      <div className={cn('bg-blue-600 rounded-full animate-bounce', dotSize)} style={{ animationDelay: '300ms' }} />
+    <div className={cn('inline-block', sizeClasses[size], className)}>
+      <svg
+        className="spinner-rotate"
+        width={sizeValue}
+        height={sizeValue}
+        viewBox={`0 0 ${sizeValue} ${sizeValue}`}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Background circle - subtle */}
+        <circle
+          cx={sizeValue / 2}
+          cy={sizeValue / 2}
+          r={radius}
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          className="opacity-20"
+        />
+        {/* Animated arc - primary color */}
+        <circle
+          cx={sizeValue / 2}
+          cy={sizeValue / 2}
+          r={radius}
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          className="text-primary spinner-arc"
+          style={{
+            strokeDasharray: circumference,
+            strokeDashoffset: circumference * 0.25,
+          }}
+        />
+      </svg>
     </div>
   )
 }
 
+// Modern smooth bouncing dots
+function DotsSpinner({ size = 'md', className }: Pick<SpinnerProps, 'size' | 'className'>) {
+  const dotSize = size === 'sm' ? 'w-1.5 h-1.5' : size === 'md' ? 'w-2 h-2' : size === 'lg' ? 'w-2.5 h-2.5' : 'w-3 h-3'
+  const gap = size === 'sm' ? 'gap-1' : size === 'md' ? 'gap-1.5' : 'gap-2'
+
+  return (
+    <div className={cn('inline-flex items-center', gap, className)}>
+      <div
+        className={cn('bg-primary rounded-full dot-bounce', dotSize)}
+        style={{ animationDelay: '0ms' }}
+      />
+      <div
+        className={cn('bg-primary rounded-full dot-bounce', dotSize)}
+        style={{ animationDelay: '160ms' }}
+      />
+      <div
+        className={cn('bg-primary rounded-full dot-bounce', dotSize)}
+        style={{ animationDelay: '320ms' }}
+      />
+    </div>
+  )
+}
+
+// Modern pulsing ring
 function PulseSpinner({ size = 'md', className }: Pick<SpinnerProps, 'size' | 'className'>) {
   return (
-    <div className={cn('flex space-x-1', className)}>
-      <div className={cn('bg-blue-600 rounded-full animate-pulse', sizeClasses[size])} />
-      <div className={cn('bg-blue-600 rounded-full animate-pulse', sizeClasses[size])} style={{ animationDelay: '0.1s' }} />
-      <div className={cn('bg-blue-600 rounded-full animate-pulse', sizeClasses[size])} style={{ animationDelay: '0.2s' }} />
+    <div className={cn('relative inline-block', sizeClasses[size], className)}>
+      {/* Outer pulsing ring */}
+      <div className="absolute inset-0 rounded-full bg-primary/30 pulse-ring"
+           style={{ animationDelay: '0s' }} />
+      {/* Middle pulsing ring */}
+      <div className="absolute inset-0 rounded-full bg-primary/40 pulse-ring"
+           style={{ animationDelay: '0.4s' }} />
+      {/* Inner solid circle */}
+      <div className="absolute inset-0 rounded-full bg-primary scale-50" />
     </div>
   )
 }

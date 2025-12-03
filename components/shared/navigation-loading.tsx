@@ -81,12 +81,16 @@ export default function NavigationLoading() {
   if (!isLoading) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background/80 backdrop-blur-md">
-      <div className="p-6 rounded-lg shadow-md w-full max-w-sm text-center">
-        <Loading
-          spinner={{ variant: 'default', size: 'xl' }}
-          className="justify-center"
-        />
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background/90 backdrop-blur-sm">
+      <div className='flex flex-col items-center gap-4'>
+        <div className='relative'>
+          {/* Subtle glow effect behind spinner */}
+          <div className='absolute inset-0 bg-primary/20 blur-xl rounded-full scale-150' />
+          <Loading
+            spinner={{ variant: 'default', size: 'xl' }}
+            className="justify-center relative z-10"
+          />
+        </div>
       </div>
     </div>
   )
