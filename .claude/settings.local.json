@@ -20,7 +20,9 @@
       "Bash(xargs kill:*)",
       "Bash(find:*)",
       "Bash(rm:*)",
-      "Bash(rmdir:*)"
+      "Bash(rmdir:*)",
+      "Bash(lsof:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

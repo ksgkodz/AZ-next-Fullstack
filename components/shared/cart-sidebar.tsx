@@ -78,17 +78,15 @@ export default function CartSidebar() {
             <div className='space-y-3 pr-2'>
               {items.map((item) => (
                 <div key={item.clientId} className='space-y-2'>
-                  <Link href={`/product/${item.slug}`}>
-                    <div className='relative h-20 w-full'>
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        sizes='160px'
-                        className='object-contain rounded'
-                      />
-                    </div>
-                  </Link>
+                  <div className='relative h-20 w-full cursor-pointer' onClick={() => window.location.href = `/product/${item.slug}`}>
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      sizes='160px'
+                      className='object-contain rounded'
+                    />
+                  </div>
                   <div className='text-xs text-center font-bold'>
                     <ProductPrice price={item.price} plain />
                   </div>
@@ -113,11 +111,16 @@ export default function CartSidebar() {
                       </SelectContent>
                     </Select>
                     <Button
+                      type='button'
                       variant={'outline'}
                       size={'sm'}
                       className='h-7 w-7 p-0 flex-shrink-0'
-                      onClick={async () => {
-                        await removeItem(item)
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        e.nativeEvent.stopImmediatePropagation()
+                        removeItem(item)
+                        return false
                       }}
                     >
                       <TrashIcon className='w-3 h-3' />
