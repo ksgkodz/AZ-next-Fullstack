@@ -15,6 +15,7 @@ export async function createProduct(data: IProductInput) {
     await connectToDatabase()
     await Product.create(product)
     revalidatePath('/admin/products')
+    revalidatePath('/', 'layout')
     return {
       success: true,
       message: 'Product created successfully',
@@ -31,6 +32,7 @@ export async function updateProduct(data: z.infer<typeof ProductUpdateSchema>) {
     await connectToDatabase()
     await Product.findByIdAndUpdate(product._id, product)
     revalidatePath('/admin/products')
+    revalidatePath('/', 'layout')
     return {
       success: true,
       message: 'Product updated successfully',
@@ -53,6 +55,7 @@ export async function deleteProduct(id: string) {
     const res = await Product.findByIdAndDelete(id)
     if (!res) throw new Error('Product not found')
     revalidatePath('/admin/products')
+    revalidatePath('/', 'layout')
     return {
       success: true,
       message: 'Product deleted successfully',

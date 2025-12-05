@@ -23,25 +23,24 @@ const ProductCard = ({
 }) => {
   const ProductImage = () => (
     <Link href={`/product/${product.slug}`}>
-      <div className='relative h-52'>
-        {product.images.length > 1 ? (
-          <ImageHover
+      {product.images.length > 1 ? (
+        <ImageHover
+          src={product.images[0]}
+          hoverSrc={product.images[1]}
+          alt={product.name}
+        />
+      ) : (
+        <div className='relative aspect-square bg-gradient-to-br from-[#f5f7fa] to-[#e8ecf1] dark:from-[#1a1f2e] dark:to-[#2d3748] rounded-lg p-4 overflow-hidden group-hover:border-2 group-hover:border-primary transition-all duration-300'>
+          <Image
             src={product.images[0]}
-            hoverSrc={product.images[1]}
             alt={product.name}
+            fill
+            sizes='(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw'
+            className='object-contain'
+            loading='lazy'
           />
-        ) : (
-          <div className='relative h-52'>
-            <Image
-              src={product.images[0]}
-              alt={product.name}
-              fill
-              sizes='80vw'
-              className='object-contain'
-            />
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </Link>
   )
   const ProductDetails = () => (
@@ -106,7 +105,7 @@ const ProductCard = ({
       )}
     </div>
   ) : (
-    <Card className='flex flex-col  '>
+    <Card className='flex flex-col group'>
       <CardHeader className='p-3'>
         <ProductImage />
       </CardHeader>

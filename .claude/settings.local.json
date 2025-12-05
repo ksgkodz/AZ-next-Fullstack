@@ -23,7 +23,8 @@
       "Bash(rmdir:*)",
       "Bash(lsof:*)",
       "Bash(cat:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(head:*)"
     ],
     "deny": [],
     "ask": []

@@ -13,6 +13,8 @@ import { getSetting } from '@/lib/actions/setting.actions'
 import { toSlug } from '@/lib/utils'
 import { getTranslations } from 'next-intl/server'
 
+export const revalidate = 60 // Revalidate every 60 seconds
+
 export default async function HomePage() {
   const t = await getTranslations('Home')
   const { carousels } = await getSetting()

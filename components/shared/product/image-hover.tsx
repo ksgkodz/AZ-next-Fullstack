@@ -25,7 +25,7 @@ const ImageHover = ({
 
   return (
     <div
-      className='relative h-52'
+      className='relative aspect-square bg-gradient-to-br from-[#f5f7fa] to-[#e8ecf1] dark:from-[#1a1f2e] dark:to-[#2d3748] rounded-lg p-4 overflow-hidden group-hover:border-2 group-hover:border-primary transition-all duration-300'
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -33,19 +33,19 @@ const ImageHover = ({
         src={src}
         alt={alt}
         fill
-        sizes='80vw'
-        className={`object-contain transition-opacity duration-500 ${
-          isHovered ? 'opacity-0' : 'opacity-100'
-        }`}
+        sizes='(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw'
+        className='object-contain transition-opacity duration-300'
+        style={{ opacity: isHovered ? 0 : 1 }}
+        loading='lazy'
       />
       <Image
         src={hoverSrc}
-        alt={alt}
+        alt={`${alt} - alternate view`}
         fill
-        sizes='80vw'
-        className={`absolute inset-0 object-contain transition-opacity duration-500 ${
-          isHovered ? 'opacity-100' : 'opacity-0'
-        }`}
+        sizes='(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw'
+        className='object-contain transition-opacity duration-300'
+        style={{ opacity: isHovered ? 1 : 0 }}
+        loading='lazy'
       />
     </div>
   )
